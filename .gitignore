@@ -1,0 +1,27 @@
+# Local configuration (created by the installer; contains the DB password)
+config/config.php
+
+# Runtime storage: uploads, backups, generated files
+storage/uploads/
+storage/backups/
+storage/*.log
+backups/
+
+# Android signing material - NEVER commit
+*.jks
+*.keystore
+keystore.properties
+clients/android/release/
+
+# Client build outputs
+node_modules/
+dist/
+win-unpacked/
+*.apk
+*.idsig
+*.exe
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.tmp

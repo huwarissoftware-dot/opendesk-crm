@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenDesk CRM - Server Not Reachable</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#eef2f6; color:#1c2b3a; }
+  .wrap { max-width:520px; margin:0 auto; padding:32px 20px 40px; }
+  .card { background:#fff; border-radius:14px; box-shadow:0 4px 24px rgba(15,42,68,.12); padding:28px 24px; text-align:center; }
+  .logo { display:block; width:72px; height:72px; margin:0 auto 12px; }
+  h1 { font-size:21px; margin:4px 0 8px; color:#9c1f16; }
+  p { color:#44566a; font-size:14.5px; line-height:1.6; margin:0 0 8px; }
+  .addr { font-family: Consolas, Menlo, monospace; font-size:13.5px; background:#eef2f6; border-radius:7px; padding:9px 10px; margin:14px 0 20px; word-break:break-all; color:#0f2a44; }
+  button { width:100%; padding:13px; font-size:15.5px; font-weight:600; border-radius:9px; cursor:pointer; margin-bottom:10px; }
+  .primary { color:#fff; background:#0f2a44; border:none; }
+  .secondary { color:#0f2a44; background:#fff; border:1.5px solid #0f2a44; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <img class="logo" src="icon.png" alt="OpenDesk CRM">
+    <h1>Server Not Reachable</h1>
+    <p>The OpenDesk CRM server could not be reached.<br>Please check your internet / network connection.</p>
+    <p>If you are outside the office, make sure you are using the public address, not the office LAN address.</p>
+    <div class="addr" id="addr"></div>
+    <button class="primary" id="retry">Retry</button>
+    <button class="secondary" id="change">Change Server Address</button>
+  </div>
+</div>
+<script>
+  var Bridge = window.OpenDeskBridge || window.clientBridge;
+  var shown = '';
+  if (Bridge && Bridge.getServer) { shown = Bridge.getServer() || ''; }
+  if (!shown) {
+    var m = /[?&]server=([^&]*)/.exec(location.search);
+    if (m) shown = decodeURIComponent(m[1]);
+  }
+  document.getElementById('addr').textContent = shown;
+  document.getElementById('retry').addEventListener('click', function () { if (Bridge && Bridge.retry) Bridge.retry(); });
+  document.getElementById('change').addEventListener('click', function () { if (Bridge && Bridge.changeServer) Bridge.changeServer(); });
+</script>
+</body>
+</html>

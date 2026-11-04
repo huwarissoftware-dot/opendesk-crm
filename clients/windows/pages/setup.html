@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenDesk CRM - Connect to Server</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#eef2f6; color:#1c2b3a; }
+  .wrap { max-width:520px; margin:0 auto; padding:32px 20px 40px; }
+  .card { background:#fff; border-radius:14px; box-shadow:0 4px 24px rgba(15,42,68,.12); padding:28px 24px; }
+  .logo { display:block; width:72px; height:72px; margin:0 auto 12px; }
+  h1 { font-size:22px; text-align:center; margin:4px 0 6px; color:#0f2a44; }
+  p.sub { text-align:center; color:#5a6b7c; font-size:14px; margin:0 0 22px; line-height:1.5; }
+  label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#0f2a44; }
+  input[type=text] { width:100%; padding:12px 14px; font-size:16px; border:1.5px solid #c3cedb; border-radius:9px; outline:none; }
+  input[type=text]:focus { border-color:#26a69a; box-shadow:0 0 0 3px rgba(38,166,154,.18); }
+  .hint { font-size:12.5px; color:#5a6b7c; line-height:1.6; margin:12px 0 20px; }
+  .hint code { background:#eef2f6; padding:1px 5px; border-radius:4px; font-size:12px; }
+  button { width:100%; padding:13px; font-size:16px; font-weight:600; color:#fff; background:#0f2a44; border:none; border-radius:9px; cursor:pointer; }
+  button:active { background:#173d61; }
+  .err { display:none; background:#fdecea; color:#9c1f16; border:1px solid #f3c1bc; border-radius:8px; padding:10px 12px; font-size:13.5px; margin-bottom:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <img class="logo" src="icon.png" alt="OpenDesk CRM">
+    <h1>OpenDesk CRM</h1>
+    <p class="sub">Enter the address of your OpenDesk CRM server.<br>You only need to do this once.</p>
+    <div class="err" id="err"></div>
+    <form id="f">
+      <label for="addr">Server address</label>
+      <input type="text" id="addr" placeholder="http://192.168.1.50/opendesk-crm" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <div class="hint">
+        Examples:<br>
+        &bull; Inside the office (LAN): <code>http://192.168.1.50/opendesk-crm</code><br>
+        &bull; From outside (internet): <code>https://crm.example.com</code> or your public static IP address.<br>
+        Ask your system administrator if you are not sure which address to use.
+      </div>
+      <button type="submit">Save &amp; Connect</button>
+    </form>
+  </div>
+</div>
+<script>
+  var Bridge = window.OpenDeskBridge || window.clientBridge;
+  document.getElementById('f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = document.getElementById('addr').value.trim();
+    var err = document.getElementById('err');
+    if (!v) { err.textContent = 'Please enter the server address.'; err.style.display = 'block'; return; }
+    if (Bridge && Bridge.saveServer) { Bridge.saveServer(v); }
+  });
+  // Pre-fill with the currently saved address when changing the server.
+  if (Bridge && Bridge.getServer) {
+    var cur = Bridge.getServer();
+    if (cur) document.getElementById('addr').value = cur;
+  }
+</script>
+</body>
+</html>
