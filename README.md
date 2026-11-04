@@ -1,6 +1,6 @@
 # OpenDesk CRM — Self-Hosted PHP Edition
 
-A complete CRM for support operations (built for ISP-style workflows, adaptable to any
+A complete CRM for support operations (built for ISP-Data Centers style workflows, adaptable to any
 industry): tickets with a per-customer daily reference format, SLA tracking, vendor
 escalation, RFO/RCA, reports, master-data import/export, and email-to-ticket.
 
